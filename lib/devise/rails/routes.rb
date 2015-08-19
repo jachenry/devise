@@ -437,16 +437,13 @@ ERROR
         @scope[:path] = path
       end
 
-      def with_devise_exclusive_scope(new_path, new_as, options) #:nodoc:
-        current_scope = @scope.dup
-
-        exclusive = { as: new_as, path: new_path, module: nil }
-        exclusive.merge!(options.slice(:constraints, :defaults, :options))
-
-        exclusive.each_pair { |key, value| @scope[key] = value }
+      def with_devise_exclusive_scope(new_path, new_as, options)
+        overrides = { as: new_as, path: new_path, module: nil }
+        overrides.merge!(options.slice(:constraints, :defaults, :options))
+        @scope = @scope.new(overrides)
         yield
       ensure
-        @scope = current_scope
+        @scope = @scope.parent
       end
 
       def constraints_for(method_to_apply, scope=nil, block=nil)
