@@ -6,7 +6,7 @@ module Devise
   # page based on current scope and mapping. If no scope is given, redirect
   # to the default_url.
   class FailureApp < ActionController::Metal
-    include ActionController::RackDelegation
+    #include ActionController::RackDelegation
     include ActionController::UrlFor
     include ActionController::Redirecting
 
@@ -22,7 +22,7 @@ module Devise
       @respond.call(env)
     end
 
-    # Try retrieving the URL options from the parent controller (usually 
+    # Try retrieving the URL options from the parent controller (usually
     # ApplicationController). Instance methods are not supported at the moment,
     # so only the class-level attribute is used.
     def self.default_url_options(*args)
